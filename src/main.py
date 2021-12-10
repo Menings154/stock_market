@@ -35,12 +35,12 @@ for count, name in enumerate(crv_names):
         links[count].append(j)
 
 # Write the mail
-body = f'Here are todays recomendations:\r'
+body = f"Here are todays recommendations:\r"
 for count, name in enumerate(crv_names):
-    body += f'{name}: CRV = {dic_crv[crv_tickers[count]]}\r'
+    body += f"{name}: CRV = {dic_crv[crv_tickers[count]]}\r"
     for i in links[count]:
-        body += f'{i}\r'
-body += '\r'
-body += 'Hope the mail is useful!'
+        body += f"{i}\r"
+body += "\r"
+body += "Hope the mail is useful!"
 
-sandp.send_mail(email='zenz.finanzen@gmail.com', subject='Good stocks', body=body)
+sandp.send_mail(email="zenz.finanzen@gmail.com", subject="Good stocks", body=body)

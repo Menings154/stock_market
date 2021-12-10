@@ -4,8 +4,8 @@ import numpy as np
 import pandas_datareader as web
 import ezgmail
 
-class Index:
 
+class Index:
     def __init__(self):
         self.tickers = None
         self.names = None
@@ -17,14 +17,14 @@ class Index:
 
     def scrap_tickers(self):
         response = requests.get(self.webside)
-        soup = bs.BeautifulSoup(response.text, 'lxml')
-        tabelle = soup.find('table', {'class': 'wikitable sortable'})
+        soup = bs.BeautifulSoup(response.text, "lxml")
+        tabelle = soup.find("table", {"class": "wikitable sortable"})
         tickers = []
         names = []
-        for reihe in tabelle.findAll('tr')[1:]:
-            ticker = reihe.findAll('td')[self.index_tickers].text
+        for reihe in tabelle.findAll("tr")[1:]:
+            ticker = reihe.findAll("td")[self.index_tickers].text
             tickers.append(ticker)
-            name = reihe.findAll('td')[self.index_names].text
+            name = reihe.findAll("td")[self.index_names].text
             names.append(name)
         self.tickers = [ticker for ticker in tickers]
         self.names = [name for name in names]
@@ -44,13 +44,13 @@ class Index:
         return self.names
 
     def load_stock(self, ticker):
-        df = web.DataReader(ticker, 'yahoo')
+        df = web.DataReader(ticker, "yahoo")
         return df
 
     def calculate_crv(self, df):
-        highest = df['Close'].max()
-        lowest = df['Close'].min()
-        today = df['Close'][-1]
+        highest = df["Close"].max()
+        lowest = df["Close"].min()
+        today = df["Close"][-1]
         crv = np.abs((highest - today) / (lowest - today))
         return crv
 
@@ -63,7 +63,7 @@ class Sandp500(Index):
 
     def __init__(self):
         super(Index).__init__()
-        self.webside = 'https://en.wikipedia.org/wiki/List_of_S%26P_500_companies'
+        self.webside = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
         self.index_tickers = 0
         self.index_names = 1
 
@@ -76,7 +76,7 @@ class DAX(Index):
 
     def __init__(self):
         super(Index).__init__()
-        self.webside = 'https://de.wikipedia.org/wiki/DAX#Unternehmen_im_DAX'
+        self.webside = "https://de.wikipedia.org/wiki/DAX#Unternehmen_im_DAX"
         self.index_tickers = 1
         self.index_names = 0
 
